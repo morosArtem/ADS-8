@@ -3,7 +3,6 @@
 #define INCLUDE_BST_H_
 
 #include <string>
-#include <algorithm>
 
 template<typename T>
 class BST {
@@ -13,7 +12,7 @@ class BST {
     int count;
     Node* left;
     Node* right;
-    explicit Node(const T& value) : data(value), count(0), left(nullptr), right(nullptr) {}
+    explicit Node(const T& value) : data(value), count(1), left(nullptr), right(nullptr) {}
   };
 
   Node* root_;
@@ -43,7 +42,9 @@ class BST {
 
   int depth(Node* node) const {
     if (node == nullptr) return 0;
-    return 1 + std::max(depth(node->left), depth(node->right));
+    int left_depth = depth(node->left);
+    int right_depth = depth(node->right);
+    return 1 + (left_depth > right_depth ? left_depth : right_depth);
   }
 
   void clear(Node* node) {
