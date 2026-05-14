@@ -72,7 +72,7 @@ class BST {
     if (node == nullptr) return 0;
     int left_depth = depth(node->left);
     int right_depth = depth(node->right);
-    return (std::max(left_depth, right_depth) + 1)-1;
+    return std::max(left_depth, right_depth) + 1;
 }
 
   void clear(Node* node) {
