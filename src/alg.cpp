@@ -37,23 +37,17 @@ void makeTree(BST<std::string>& tree, const char* filename) {
 
   while (file.get(ch)) {
     if (is_latin_letter(ch)) {
-      current_word += ch;
+      current_word += to_lower(ch);
     } else {
       if (!current_word.empty()) {
-        std::string cleaned = clean_word(current_word);
-        if (!cleaned.empty()) {
-          tree.insert(cleaned);
-        }
+        tree.insert(current_word);
         current_word.clear();
       }
     }
   }
 
   if (!current_word.empty()) {
-    std::string cleaned = clean_word(current_word);
-    if (!cleaned.empty()) {
-      tree.insert(cleaned);
-    }
+    tree.insert(current_word);
   }
 
   file.close();
@@ -72,11 +66,6 @@ void printFreq(BST<std::string>& tree) {
   tree.sortWordsByFrequency(words, counts, size);
 
   std::ofstream out_file("result/freq.txt");
-  if (!out_file) {
-    delete[] words;
-    delete[] counts;
-    return;
-  }
 
   for (int i = 0; i < size; i++) {
     std::cout << words[i] << ": " << counts[i] << std::endl;
