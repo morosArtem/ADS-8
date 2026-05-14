@@ -2,19 +2,18 @@
 #include <fstream>
 #include <cctype>
 #include <string>
-#include <iostream>
 #include "bst.h"
 
 void makeTree(BST<std::string>& tree, const char* filename) {
   std::ifstream file(filename);
-  if (!file) return;
+  if (!file.is_open()) return;
 
   std::string word;
   char ch;
 
   while (file.get(ch)) {
-    if (std::isalpha(ch)) {
-      word += std::tolower(ch);
+    if (std::isalpha(static_cast<unsigned char>(ch))) {
+      word += std::tolower(static_cast<unsigned char>(ch));
     } else {
       if (!word.empty()) {
         tree.insert(word);
