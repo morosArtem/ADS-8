@@ -33,18 +33,18 @@ class BST {
     }
   }
 
-  bool search(Node* node, const T& value) const {
-    if (node == nullptr) return false;
-    if (value == node->data) return true;
+  int search(Node* node, const T& value) const {
+    if (node == nullptr) return 0;
+    if (value == node->data) return node->count;
     if (value < node->data) return search(node->left, value);
     return search(node->right, value);
   }
 
   int depth(Node* node) const {
     if (node == nullptr) return 0;
-    int leftDepth = depth(node->left);
-    int rightDepth = depth(node->right);
-    return 1 + (leftDepth > rightDepth ? leftDepth : rightDepth);
+    int left_depth = depth(node->left);
+    int right_depth = depth(node->right);
+    return 1 + (left_depth > right_depth ? left_depth : right_depth);
   }
 
   void clear(Node* node) {
@@ -52,30 +52,6 @@ class BST {
     clear(node->left);
     clear(node->right);
     delete node;
-  }
-
-  void copyToArray(Node* node, std::string* words, int* counts, int& index) const {
-    if (node == nullptr) return;
-    copyToArray(node->left, words, counts, index);
-    words[index] = node->data;
-    counts[index] = node->count;
-    index++;
-    copyToArray(node->right, words, counts, index);
-  }
-
-  void sortByFrequency(std::string* words, int* counts, int n) {
-    for (int i = 0; i < n - 1; i++) {
-      for (int j = i + 1; j < n; j++) {
-        if (counts[i] < counts[j]) {
-          int tempCount = counts[i];
-          counts[i] = counts[j];
-          counts[j] = tempCount;
-          std::string tempWord = words[i];
-          words[i] = words[j];
-          words[j] = tempWord;
-        }
-      }
-    }
   }
 
  public:
@@ -89,7 +65,7 @@ class BST {
     insert(root_, value);
   }
 
-  bool search(const T& value) const {
+  int search(const T& value) const {
     return search(root_, value);
   }
 
@@ -97,31 +73,12 @@ class BST {
     return depth(root_);
   }
 
-  bool isEmpty() const {
+  bool empty() const {
     return root_ == nullptr;
   }
 
-  int getCount(const T& value) const {
-    Node* node = root_;
-    while (node != nullptr) {
-      if (value == node->data) return node->count;
-      if (value < node->data) node = node->left;
-      else node = node->right;
-    }
-    return 0;
-  }
-
-  int getSize() const {
+  int size() const {
     return size_;
-  }
-
-  void getWordsAndCounts(std::string* words, int* counts) const {
-    int index = 0;
-    copyToArray(root_, words, counts, index);
-  }
-
-  void sortWordsByFrequency(std::string* words, int* counts, int n) {
-    sortByFrequency(words, counts, n);
   }
 };
 
