@@ -3,9 +3,37 @@
 #define INCLUDE_BST_H_
 
 #include <string>
+#include <algorithm>
 
 template<typename T>
 class BST {
+ public:
+  BST() : root_(nullptr), size_(0) {}
+
+  ~BST() {
+    clear(root_);
+  }
+
+  void insert(const T& value) {
+    insert(root_, value);
+  }
+
+  int search(const T& value) const {
+    return search(root_, value);
+  }
+
+  int depth() const {
+    return depth(root_);
+  }
+
+  bool empty() const {
+    return root_ == nullptr;
+  }
+
+  int size() const {
+    return size_;
+  }
+
  private:
   struct Node {
     T data;
@@ -44,7 +72,7 @@ class BST {
     if (node == nullptr) return 0;
     int left_depth = depth(node->left);
     int right_depth = depth(node->right);
-    return 1 + (left_depth > right_depth ? left_depth : right_depth);
+    return 1 + std::max(left_depth, right_depth);
   }
 
   void clear(Node* node) {
@@ -52,33 +80,6 @@ class BST {
     clear(node->left);
     clear(node->right);
     delete node;
-  }
-
- public:
-  BST() : root_(nullptr), size_(0) {}
-
-  ~BST() {
-    clear(root_);
-  }
-
-  void insert(const T& value) {
-    insert(root_, value);
-  }
-
-  int search(const T& value) const {
-    return search(root_, value);
-  }
-
-  int depth() const {
-    return depth(root_);
-  }
-
-  bool empty() const {
-    return root_ == nullptr;
-  }
-
-  int size() const {
-    return size_;
   }
 };
 
