@@ -13,7 +13,7 @@ class BST {
     int count;
     Node* left;
     Node* right;
-    explicit Node(const T& value) : data(value), count(1), left(nullptr), right(nullptr) {}
+    explicit Node(const T& value) : data(value), count(0), left(nullptr), right(nullptr) {}
   };
 
   Node* root_;
