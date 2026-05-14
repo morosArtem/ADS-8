@@ -54,30 +54,6 @@ class BST {
     delete node;
   }
 
-  void copyToArray(Node* node, std::string* words, int* counts, int& index) const {
-    if (node == nullptr) return;
-    copyToArray(node->left, words, counts, index);
-    words[index] = node->data;
-    counts[index] = node->count;
-    index++;
-    copyToArray(node->right, words, counts, index);
-  }
-
-  void sortByFrequency(std::string* words, int* counts, int n) {
-    for (int i = 0; i < n - 1; i++) {
-      for (int j = i + 1; j < n; j++) {
-        if (counts[i] < counts[j]) {
-          int temp_count = counts[i];
-          counts[i] = counts[j];
-          counts[j] = temp_count;
-          std::string temp_word = words[i];
-          words[i] = words[j];
-          words[j] = temp_word;
-        }
-      }
-    }
-  }
-
  public:
   BST() : root_(nullptr), size_(0) {}
 
@@ -103,15 +79,6 @@ class BST {
 
   int size() const {
     return size_;
-  }
-
-  void getWordsAndCounts(std::string* words, int* counts) const {
-    int index = 0;
-    copyToArray(root_, words, counts, index);
-  }
-
-  void sortWordsByFrequency(std::string* words, int* counts, int n) {
-    sortByFrequency(words, counts, n);
   }
 };
 
