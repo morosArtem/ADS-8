@@ -1,9 +1,9 @@
 // Copyright 2021 NNTU-CS
-#include  <iostream>
-#include  <fstream>
-#include  <locale>
-#include  <cstdlib>
-#include  "bst.h"
+#include "bst.h"
+#include <fstream>
+#include <cctype>
+#include <string>
+#include <iostream>
 
 void makeTree(BST<std::string>& tree, const char* filename) {
   auto is_latin_letter = [](char c) -> bool {
@@ -60,7 +60,7 @@ void makeTree(BST<std::string>& tree, const char* filename) {
 }
 
 void printFreq(BST<std::string>& tree) {
-  int size = tree.getSize();
+  int size = tree.size();
   if (size == 0) {
     return;
   }
@@ -71,8 +71,8 @@ void printFreq(BST<std::string>& tree) {
   tree.getWordsAndCounts(words, counts);
   tree.sortWordsByFrequency(words, counts, size);
 
-  std::ofstream outFile("result/freq.txt");
-  if (!outFile) {
+  std::ofstream out_file("result/freq.txt");
+  if (!out_file) {
     delete[] words;
     delete[] counts;
     return;
@@ -80,10 +80,10 @@ void printFreq(BST<std::string>& tree) {
 
   for (int i = 0; i < size; i++) {
     std::cout << words[i] << ": " << counts[i] << std::endl;
-    outFile << words[i] << ": " << counts[i] << std::endl;
+    out_file << words[i] << ": " << counts[i] << std::endl;
   }
 
-  outFile.close();
+  out_file.close();
   delete[] words;
   delete[] counts;
 }
