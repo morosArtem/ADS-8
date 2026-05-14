@@ -6,22 +6,22 @@
 #include  "bst.h"
 
 void makeTree(BST<std::string>& tree, const char* filename) {
-  auto isLatinLetter = [](char c) -> bool {
+  auto is_latin_letter = [](char c) -> bool {
     return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
   };
 
-  auto toLower = [](char c) -> char {
+  auto to_lower = [](char c) -> char {
     if (c >= 'A' && c <= 'Z') {
       return c + ('a' - 'A');
     }
     return c;
   };
 
-  auto cleanWord = [&](const std::string& word) -> std::string {
+  auto clean_word = [&](const std::string& word) -> std::string {
     std::string result;
     for (char c : word) {
-      if (isLatinLetter(c)) {
-        result += toLower(c);
+      if (is_latin_letter(c)) {
+        result += to_lower(c);
       }
     }
     return result;
@@ -32,25 +32,25 @@ void makeTree(BST<std::string>& tree, const char* filename) {
     return;
   }
 
-  std::string currentWord;
+  std::string current_word;
   char ch;
 
   while (file.get(ch)) {
-    if (isLatinLetter(ch)) {
-      currentWord += ch;
+    if (is_latin_letter(ch)) {
+      current_word += ch;
     } else {
-      if (!currentWord.empty()) {
-        std::string cleaned = cleanWord(currentWord);
+      if (!current_word.empty()) {
+        std::string cleaned = clean_word(current_word);
         if (!cleaned.empty()) {
           tree.insert(cleaned);
         }
-        currentWord.clear();
+        current_word.clear();
       }
     }
   }
 
-  if (!currentWord.empty()) {
-    std::string cleaned = cleanWord(currentWord);
+  if (!current_word.empty()) {
+    std::string cleaned = clean_word(current_word);
     if (!cleaned.empty()) {
       tree.insert(cleaned);
     }
