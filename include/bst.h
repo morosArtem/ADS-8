@@ -1,8 +1,8 @@
 // Copyright 2021 NNTU-CS
-#ifndef INCLUDE_BST_H_
-#define INCLUDE_BST_H_
+#ifndef BST_H_
+#define BST_H_
 
-#include  <iostream>
+#include <string>
 
 template<typename T>
 class BST {
@@ -42,9 +42,9 @@ class BST {
 
   int depth(Node* node) const {
     if (node == nullptr) return 0;
-    int left_depth = depth(node->left);
-    int right_depth = depth(node->right);
-    return 1 + (left_depth > right_depth ? left_depth : right_depth);
+    int leftDepth = depth(node->left);
+    int rightDepth = depth(node->right);
+    return 1 + (leftDepth > rightDepth ? leftDepth : rightDepth);
   }
 
   void clear(Node* node) {
@@ -54,8 +54,7 @@ class BST {
     delete node;
   }
 
-  void copyToArray(Node* node, std::string* words, int* counts,
-                   int& index) const {
+  void copyToArray(Node* node, std::string* words, int* counts, int& index) const {
     if (node == nullptr) return;
     copyToArray(node->left, words, counts, index);
     words[index] = node->data;
@@ -68,12 +67,12 @@ class BST {
     for (int i = 0; i < n - 1; i++) {
       for (int j = i + 1; j < n; j++) {
         if (counts[i] < counts[j]) {
-          int temp_count = counts[i];
+          int tempCount = counts[i];
           counts[i] = counts[j];
-          counts[j] = temp_count;
-          std::string temp_word = words[i];
+          counts[j] = tempCount;
+          std::string tempWord = words[i];
           words[i] = words[j];
-          words[j] = temp_word;
+          words[j] = tempWord;
         }
       }
     }
@@ -106,11 +105,8 @@ class BST {
     Node* node = root_;
     while (node != nullptr) {
       if (value == node->data) return node->count;
-      if (value < node->data) {
-        node = node->left;
-      } else {
-        node = node->right;
-      }
+      if (value < node->data) node = node->left;
+      else node = node->right;
     }
     return 0;
   }
