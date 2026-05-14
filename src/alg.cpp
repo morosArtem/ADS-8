@@ -1,9 +1,9 @@
 // Copyright 2021 NNTU-CS
-#include "bst.h"
 #include <fstream>
 #include <cctype>
 #include <string>
 #include <iostream>
+#include "bst.h"
 
 void makeTree(BST<std::string>& tree, const char* filename) {
   auto is_latin_letter = [](char c) -> bool {
